@@ -9,6 +9,13 @@
  - Keep track of all the books you read
  - Light/Dark theme support
 
+# The purpose of this fork ( ・ω・ )─∈
+- Make this more like a database of the books one has on their bookshelf
+- Add barcode scanning functionality
+- After a barcode is scanned, the book would be automatically added to the database (To "Bookshelf" or whatever user has set as their default.)
+- Currently the categories are "To read", "Reading" and "Finished" -> Make them "Wishlist", "Bookshelf" and maybe "Currently reading"?
+- Add support to other APIs aside from Google Books, especially to better support certain languages
+
 # Screenshots
 
 | Home screen | Details screen | Search screen | More screen |
