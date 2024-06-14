@@ -39,7 +39,7 @@ fun SearchScreen(navController: NavHostController, bookViewModel: BookViewModel)
     ) {
         Scaffold(
             topBar = { SearchTopBar(navController, bookViewModel) },
-        ) {
+        ) { padding -> // Maybe could remove "padding ->" parts
             BookList(navController, bookViewModel)
 
             if (bookViewModel.isLoading.value) {

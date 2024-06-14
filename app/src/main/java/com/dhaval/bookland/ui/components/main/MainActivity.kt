@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -60,6 +61,11 @@ class MainActivity : ComponentActivity() {
             return
         }
 
+        if (navController.currentBackStackEntry?.destination?.route == Screen.BarcodeScanner.route) {
+            navController.navigate(Screen.Main.route)
+            return
+        }
+
         if(navController.currentBackStackEntry?.destination?.route == Screen.About.route) {
             navController.navigate(Screen.Main.route)
             return
@@ -74,6 +80,7 @@ class MainActivity : ComponentActivity() {
             bookViewModel.selectTab(BottomTab.TO_READ)
             return
         }
+        // Also make it go to barcode reader or search screen when pressing back button?
 
         super.onBackPressed()
     }
@@ -119,7 +126,15 @@ class MainActivity : ComponentActivity() {
             topBar = { TopBar() },
             floatingActionButton = {
                 if(bookViewModel.selectedTab.value != BottomTab.MORE)
-                    FAB()
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalArrangement = Arrangement.SpaceEvenly,
+                        horizontalAlignment = Alignment.End
+                    ) {
+                        FAB()
+                        Spacer(modifier = Modifier.height(16.dp))
+                        FAB2()
+                    }
             },
             bottomBar = { BottomBar() },
         ) { contentPadding ->
@@ -181,7 +196,20 @@ class MainActivity : ComponentActivity() {
             },
             backgroundColor = MaterialTheme.colors.secondary,
         ) {
-            Icon(Icons.Default.Add, "", tint = MaterialTheme.colors.secondaryVariant)
+            Icon(Icons.Default.Search, "", tint = MaterialTheme.colors.secondaryVariant)
+        }
+    }
+    @Composable
+    fun FAB2() {
+        FloatingActionButton(
+            modifier = Modifier.size(60.dp),
+            onClick = {
+                navController.navigate(Screen.BarcodeScanner.route)
+                bookViewModel.emptySearchedResult = true
+            },
+            backgroundColor = MaterialTheme.colors.secondary,
+        ) {
+            Icon(Icons.Default.Add,"",tint = MaterialTheme.colors.secondaryVariant)
         }
     }
 
@@ -222,6 +250,12 @@ class MainActivity : ComponentActivity() {
                     bookViewModel = bookViewModel,
                 )
             }
+            composable(Screen.BarcodeScanner.route) {
+                BarcodeScannerScreen(
+                    navController = navController,
+                    //bookViewModel = bookViewModel,
+                )
+            }
             composable(
                 route = Screen.Details.route,
             ) {
@@ -240,6 +274,9 @@ class MainActivity : ComponentActivity() {
             }
             composable(Screen.Libraries.route) {
                 LibrariesScreen(navController)
+            }
+            composable(Screen.BarcodeScanner.route) {
+                BarcodeScannerScreen(navController)
             }
         }
     }
