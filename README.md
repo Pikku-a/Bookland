@@ -1,3 +1,5 @@
+*Archived because I started using [NeverTooManyBooks](https://github.com/tfonteyn/NeverTooManyBooks) so there was no need to add bar code scanning to this.*
+
 # 📚 Bookland
 **Bookland** is an android app where you can track all of your book readings.
 
